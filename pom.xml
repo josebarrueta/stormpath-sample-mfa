@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.stormpath.mfa</groupId>
+    <artifactId>mfa</artifactId>
+    <version>0.1-SNAPSHOT</version>
+
+    <properties>
+        <org.springframework.version>3.2.0.RELEASE</org.springframework.version>
+        <slf4j.version>1.6.4</slf4j.version>
+        <shiro.version>1.2.2</shiro.version>
+        <apache.tiles.version>3.0.1</apache.tiles.version>
+        <shiro.stormpath.version>0.5.0</shiro.stormpath.version>
+        <stormpath.sdk.version>0.9.3</stormpath.sdk.version>
+        <twilio-version>3.4.1</twilio-version>
+        <joda.time.version>2.1</joda.time.version>
+    </properties>
+
+    <dependencies>
+        <!-- stormpath dependencies -->
+
+        <dependency>
+            <groupId>com.stormpath.sdk</groupId>
+            <artifactId>stormpath-sdk-api</artifactId>
+            <version>${stormpath.sdk.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.stormpath.sdk</groupId>
+            <artifactId>stormpath-sdk-httpclient</artifactId>
+            <version>${stormpath.sdk.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.stormpath.shiro</groupId>
+            <artifactId>stormpath-shiro-core</artifactId>
+            <version>${shiro.stormpath.version}</version>
+        </dependency>
+
+        <!-- spring dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+        <!-- twilio dependency -->
+
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio-java-sdk</artifactId>
+            <version>${twilio-version}</version>
+        </dependency>
+
+        <!-- other dependencies -->
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda.time.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+            <scope>runtime</scope>
+        </dependency>
+
+    </dependencies>
+</project>
