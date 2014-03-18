@@ -8,21 +8,23 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 /**
  * @since 0.1
  */
+@Component
 public class DefaultChallengeTokenVerifier implements ChallengeTokenVerifier {
 
     @Value("${challengeToken.timeToLive.inSeconds}")
     private int challengeTokenTimeToLiveInSeconds;
 
     @Override
-    public void verifyChallengeToken(Account account, String token) {
+    public void verifyChallengeToken(Account account, String submittedToken) throws IllegalStateException {
         Assert.notNull(account, "account cannot be null.");
-        Assert.hasText(token, "token cannot be null or empty.");
+        Assert.hasText(submittedToken, "token cannot be null or empty.");
 
         //Retrieve the account customData
         CustomData customData = account.getCustomData();
@@ -31,17 +33,28 @@ public class DefaultChallengeTokenVerifier implements ChallengeTokenVerifier {
 
         Assert.notEmpty(challengeTokenInfo, "There isn't challengeTokenInfo for this account.");
 
-        String challengeToken = (String) challengeTokenInfo.get("challengeToken");
-
-        if (!token.equals(challengeToken)) {
-            //Throw proper exception
-            throw new IllegalStateException("The submitted token doesn't match.");
-        }
+        String storedToken = (String) challengeTokenInfo.get("challengeToken");
 
         //Check if the token is still valid
         Long createAtInMillis = (Long) challengeTokenInfo.get("createdAtInMillis");
 
         DateTime createdAt = new DateTime(createAtInMillis, DateTimeZone.UTC);
+
+        try {
+            verifyToken(submittedToken, storedToken, createdAt);
+        } finally {
+            //Clear challenge token info, since it should be valid just once.
+            customData.remove("challengeTokenInfo");
+            customData.save();
+        }
+    }
+
+    private void verifyToken(String submittedToken, String storedToken, DateTime createdAt) {
+
+        if (!submittedToken.equals(storedToken)) {
+            //Throw proper exception
+            throw new IllegalStateException("The submitted token doesn't match.");
+        }
 
         Duration duration = new Duration(createdAt, DateTime.now());
 

@@ -7,6 +7,7 @@ import com.stormpath.sdk.account.Account;
  */
 public interface ChallengeTokenVerifier {
 
-    void verifyChallengeToken(Account account, String token);
+    //TODO: Throw a proper exception for token verification
+    void verifyChallengeToken(Account account, String token) throws IllegalStateException;
 
 }
